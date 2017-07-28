@@ -1,0 +1,12 @@
+<div class="answer">
+  <div class="userDetail">
+    <%= answer.user.email %>
+    <br>
+    <%= answer.content %>
+    <br>
+  <%= link_to 'Edit', answer %>
+  <%= link_to "Delete", answer, method: :delete, data: {confirm: "Are you sure?"}%>
+
+
+  </div>
+</div>

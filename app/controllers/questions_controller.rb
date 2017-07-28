@@ -2,22 +2,21 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
-  # GET /questions
-  # GET /questions.json
-  def index
-    @questions = Question.all
-  end
 
   # GET /questions/1  # GET /questions/1.json
-  def show
-    @answer = Answer.where(question_id: params[:question_id])
-  end
 
   # GET /questions/new
-  def new
-    @question = Question.new
-  end
+def show
+  respond_to do |format|
+    format.html{
+      @question=Question.find(params[:id])
+       @answer = Answer.new(question_id: params[@question.id])
+      @answerfeed=@question.answerfeed @question.id
 
+    }
+    format.js{  }
+  end
+end
   # GET /questions/1/edit
   def edit
   end
@@ -30,10 +29,11 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
+        format.html { redirect_to '/', notice: 'Question was successfully created.' }
+        format.js{  }
         format.json { render :show, status: :created, location: @question }
       else
-        format.html { render :new }
+        format.html { render 'home/index' }
         format.json { render json: @question.errors, status: :unprocessable_entity }
       end
     end
@@ -58,9 +58,10 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
+      format.html { redirect_to '/', notice: 'Question was successfully destroyed.' }
       format.json { head :no_content }
     end
+
   end
 
   private

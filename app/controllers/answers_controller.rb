@@ -25,15 +25,16 @@ class AnswersController < ApplicationController
   # POST /answers
   # POST /answers.json
   def create
-    # @question = Question.find(params[:question_id])
-    @answer = Answer.new(answer_params)
-@answer.user_id = current_user.id
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.create(answer_params)
+    @answer.user_id = current_user.id
     respond_to do |format|
       if @answer.save
-        format.html { redirect_to @answer, notice: 'Answer was successfully created.' }
+        format.html { redirect_to 'home/questions/', notice: 'Answer was successfully created.' }
+        format.js{  }
         format.json { render :show, status: :created, location: @answer }
       else
-        format.html { render :new }
+        format.html { render 'home/index' }
         format.json { render json: @answer.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +59,7 @@ class AnswersController < ApplicationController
   def destroy
     @answer.destroy
     respond_to do |format|
-      format.html { redirect_to answers_url, notice: 'Answer was successfully destroyed.' }
+      format.html { redirect_to '/', notice: 'Answer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

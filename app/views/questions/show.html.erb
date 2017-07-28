@@ -14,16 +14,28 @@
   <strong>User:</strong>
   <%= @question.user.email %>
 </p>
-<p>
-  <strong>answer:</strong>
-  <% @question.answers.each do |ans| %>
-  <p>  <%= ans.content %></p><br>
-    <% end %>
-</p>
-
-
-<%= link_to 'Add Answer', new_answer_path(question_id: @question.id) %>
-
 <%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' } %>
-<%= link_to 'Back', questions_path %>
+<%= link_to 'Back', 'home/index'%>
+
+<div class="createAnswer">
+   <%= form_for @answer, :url => answers_path(question_id:@question.id), remote: true do |task|%>
+      <%= task.label :content %><br>
+      <%= task.text_area :content %><br>
+      <div class="actions">
+        <%= task.submit id: 'create_answer_submit'%>
+      </div>
+      <% end %>
+      <% if @answer.errors.any? %>
+      <% @answer.errors.full_messages.each do |message| %>
+          <%= message %>
+        <% end %>
+      <% end %>
+</div>
+
+
+<div id="answers">
+  <% @answerfeed.each do |answer| %>
+  <%= render 'answer' , answer: answer %>
+
+  <% end %>
+</div>

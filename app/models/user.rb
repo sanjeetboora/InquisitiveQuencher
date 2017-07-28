@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
   #  :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :confirmable,:recoverable, :rememberable, :trackable, :validatable
-has_many :questions
-has_many :answers
+has_many :questions,dependent: :destroy
+has_many :answers,dependent: :destroy
 def feed
-  	Question.includes(:user).where(user_id: users).order(created_at: :desc)
+  	Question.includes(:user).order(created_at: :desc)
 end
 end
