@@ -30,6 +30,7 @@ class AnswersController < ApplicationController
     @answer.user_id = current_user.id
     respond_to do |format|
       if @answer.save
+        UserMailer.new_answer(@answer).deliver_now
         format.html { redirect_to 'home/questions/', notice: 'Answer was successfully created.' }
         format.js{  }
         format.json { render :show, status: :created, location: @answer }

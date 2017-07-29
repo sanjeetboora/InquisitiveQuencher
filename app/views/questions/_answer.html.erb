@@ -4,9 +4,10 @@
     <br>
     <%= answer.content %>
     <br>
-  <%= link_to 'Edit', answer %>
-  <%= link_to "Delete", answer, method: :delete, data: {confirm: "Are you sure?"}%>
-
+    <%if answer.user_id==current_user.id%>
+    <%= link_to 'Edit', answer %>
+    <%= link_to "Delete", answer, method: :delete, data: {confirm: "Are you sure?"}%>
+    <% end %>
 
   </div>
 </div>

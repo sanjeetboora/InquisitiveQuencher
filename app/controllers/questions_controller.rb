@@ -29,6 +29,7 @@ end
 
     respond_to do |format|
       if @question.save
+         UserMailer.added_question(current_user,@question).deliver_now
         format.html { redirect_to '/', notice: 'Question was successfully created.' }
         format.js{  }
         format.json { render :show, status: :created, location: @question }
