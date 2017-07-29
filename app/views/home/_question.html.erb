@@ -5,9 +5,10 @@
     <%= question.title %>
     <%= question.content %>
     <br>
-  <%= link_to 'Show', question ,params[id: question.id]%>
-  <%= link_to "Delete", question, method: :delete, data: {confirm: "Are you sure?"}%>
+    <%if can? :destroy,question%>
 
-
+    <%= link_to "Delete", question, method: :delete, data: {confirm: "Are you sure?"}%>
+    <%end%>
+    <%= link_to 'Show', question ,params[id: question.id]%>
   </div>
 </div>
