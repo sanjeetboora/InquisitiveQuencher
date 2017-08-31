@@ -12,7 +12,16 @@ class AnswersController < ApplicationController
   # GET /answers/1
   # GET /answers/1.json
   def show
+   respond_to do |format|
+    format.html{
+      @answer=Answer.find(params[:id])
+      @comment = Comment.new(answer_id: params[@answer.id])
+      @commentfeed=@answer.commentfeed @answer.id
+
+    }
+    format.js{  }
   end
+end
 
   # GET /answers/new
   def new
@@ -76,4 +85,4 @@ class AnswersController < ApplicationController
     def answer_params
       params.require(:answer).permit(:content, :question_id, :user_id)
     end
-end
+  end

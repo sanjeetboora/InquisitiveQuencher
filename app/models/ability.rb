@@ -6,7 +6,7 @@ class Ability
 
     can :manage, :all if user.role =="admin"
     can :read, :all if user.role == "guest"
-    can [:read,:create], [Question , Answer] if user.role == "member"
+    can [:read,:create], [Question , Answer , Comment] if user.role == "member"
     can :update , Question do |question|
       question.user == user
     end
@@ -19,8 +19,13 @@ class Ability
     can :destroy , Answer do |answer|
       answer.user == user
     end
-
-    can [:read,:create,:update,:destroy], [Question , Answer] if user.role == "moderator"
+     can :update , Comment do |comment|
+      comment.user == user
+    end
+    can :destroy , Comment do |comment|
+      comment.user == user
+    end
+    can [:read,:create,:update,:destroy], [Question , Answer , Comment] if user.role == "moderator"
 
 
 

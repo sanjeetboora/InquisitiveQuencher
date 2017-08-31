@@ -10,6 +10,6 @@
     <%if can? :destroy,answer%>
     <%= link_to "Delete", answer, method: :delete, data: {confirm: "Are you sure?"}%>
     <% end %>
-
+<%= link_to 'Show', answer ,params[id: answer.id]%>
   </div>
 </div>

@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :confirmable,:recoverable, :rememberable, :trackable, :validatable
 has_many :questions,dependent: :destroy
 has_many :answers,dependent: :destroy
+has_many :comments,dependent: :destroy
 enum role: {guest: 0, member: 1,moderator: 2,admin: 3}
 def feed
   	Question.includes(:user).order(created_at: :desc)
